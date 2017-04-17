@@ -46,6 +46,8 @@ Components using the Vuex+ `addStore.mixin` gets two registered properties; `ins
 
   - Preserve
     Set `preserve="true"` to keep the state from beeing discarded when the last instance is removed.
+
+    
     | false                           | true                            |
     |---------------------------------|---------------------------------|
     | ![piri](./docs/preserv_off.gif) | ![piri](./docs/preserve_on.gif) |
