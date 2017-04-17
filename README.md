@@ -47,9 +47,9 @@ Components using the Vuex+ `addStore.mixin` gets two registered properties; `ins
   - Preserve
     Set `preserve="true"` to keep the state from beeing discarded when the last instance is removed.
 
-| `<counterGroup/>``              | `<counterGroup preserve="true"/>`` |
-|---------------------------------|------------------------------------|
-| ![piri](./docs/preserv_off.gif) | ![piri](./docs/preserve_on.gif)    |
+    | `<counterGroup/>`               | `<counterGroup preserve="true"/>` |
+    |---------------------------------|-----------------------------------|
+    | ![piri](./docs/preserv_off.gif) | ![piri](./docs/preserve_on.gif)   |
 
 ### Instances in the main store
 Files ending with `-store.js` are considered to be top level stores used in [Vue components](https://vuejs.org/v2/guide/components.html), while files ending with `-substore.js` are considered to be included as modules in top level stores or as modules in substores.
