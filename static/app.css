@@ -1,0 +1,39 @@
+
+  html, body {
+    height: 100%;
+    color: #444;
+    margin: 0;
+    padding: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  p {
+    margin: 0;
+    margin-right: 5px;
+    text-align: center;
+  }
+
+  button {
+    text-align: center;
+    color: #333;
+    background-color: #eee;
+    width: 16px;
+    height: 16px;
+    padding: 2px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: #eee;
+    border-image: initial;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    outline: none;
+    line-height: 0px;
+  }
+
+  button:active {
+    background: #ddd;
+    border-top: 2px solid #bbb;
+  }
