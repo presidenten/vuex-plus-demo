@@ -4,8 +4,6 @@
 
   const { mapGetters, mapActions, mixins } = use('counter-group-store');
 
-  console.info('api', api);
-
   export default {
     mixins: [mixins.useStore],
     computed: {

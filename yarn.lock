@@ -4740,9 +4740,9 @@ vue@^2.1.10:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.2.0.tgz#f4586920ce36d53944ab27ac5236ed9303a46b47"
 
-vuex-plus@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.0.1.tgz#fe22332f86c8b7e8f79a2a7023c7e8cb38b01f03"
+vuex-plus@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.1.1.tgz#a2f61e2687954d5637c8d14a09f7f3ef6aac375b"
   dependencies:
     clone "^2.1.1"
 

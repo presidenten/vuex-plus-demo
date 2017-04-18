@@ -55,26 +55,26 @@ Components using the Vuex+ `addStore.mixin` gets two registered properties; `ins
 ### Instances in the main store
 Files ending with `-store.js` are considered to be top level stores used in [Vue components](https://vuejs.org/v2/guide/components.html), while files ending with `-substore.js` are considered to be included as modules in top level stores or as modules in substores.
 
-Here is an example of the state with two instance of `counter-group` - the base instance with no instance parameter and the `foo` instace. In the store they get registered as `counter-group` and `counter-group#foo`.
+Here is an example of the state with two instance of `counterGroup` - the base instance with no instance parameter and the `foo` instace. In the store they get registered as `counterGroup` and `counterGroup#foo`.
 ![state](./docs/state.jpg)
 
 ### Generated APIs
 Wrapping the vuex module exports in the Vuex+ `{store}` method, the stores become [namespaced](https://vuex.vuejs.org/en/modules.html) and get their own local API with magic strings under `module.api`.
 ```javascript
 import counterGroup from 'counter-group-store.js'
-console.log(counter.api);
+console.log(counterGroup.api);
 
 // =>
 
   {
     "get": {
-      "count": "counter-group/count"
+      "count": "counterGroup/count"
     },
     "act": {
-      "increase": "counter-group/increase"
+      "increase": "counterGroup/increase"
     },
     "mutate": {
-      "increase": "counter-group/increase"
+      "increase": "counterGroup/increase"
     },
     "anotherCounter": {...}
   }
@@ -93,21 +93,21 @@ console.log(api);
       "act": {...},
       "mutate": {...}
     },
-    "counter-group": {
+    "counterGroup": {
       "get": {
-        "count": "counter-group/count"
+        "count": "counterGroup/count"
       },
       "act": {...},
       "mutate": {...},
       "anotherCounter": {
         "get": {
-          "count": "counter-group/anotherCounter/count"
+          "count": "counterGroup/anotherCounter/count"
         },
         "act": {...},
         "mutate": {...},
         "comboCounter": {
           "get": {
-            "count": "counter-group/anotherCounter/comboCounter/count"
+            "count": "counterGroup/anotherCounter/comboCounter/count"
           },
           "act": {...},
           "mutate": {...}
@@ -121,7 +121,7 @@ console.log(api);
 Writing a module store is very similar to writing a normal [vuex module](https://vuex.vuejs.org/en/modules.html), except the file should end with `-store.js`.
 
 This is the general format:
-(Check out `./src/components/counter-group/counter-store.js` in the repo)
+(Check out `./src/components/counter-group/counter-group-store.js` in the repo)
 ```javascript
 // Import store wrapper from vuex+
 import { store } from 'vuex+';
@@ -268,15 +268,15 @@ const actions = {
 ```
 
 ### Get/Dispatch/Commit from vue component
-Example dispatch from vue component to counter-group instance "":
+Example dispatch from vue component to counterGroup instance "":
 (See `./src/app.vue` for an example)
 ```javascript
 this.$store.dispatch(api.counterGroup.act.increase);
 ```
 
-To dispatch to another instance, just replace the instance store name with the instance name. In this case, `counter-group#foo`:
+To dispatch to another instance, just replace the instance store name with the instance name. In this case, `counterGroup#foo`:
 ```javascript
-api.counterGroup.act.increase.replace('counter-group/', 'counter-group#foo/');
+api.counterGroup.act.increase.replace('counterGroup/', 'counterGroup#foo/');
 ```
 
 ### Writing tests
