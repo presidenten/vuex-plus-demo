@@ -191,9 +191,6 @@ Here is what the script tag should look like in the `.vue`-component:
       ...mapGetters({
         count: api.counterGroup.get.count,
       }),
-      instanceName() {
-        return this.instance || '-';
-      },
     },
     methods: {
       ...mapActions({
@@ -209,7 +206,8 @@ Here is what the script tag should look like in the `.vue`-component:
 Same as with stores, except the file ending should be `-substore.js`.
 
 ### Using module substores
-For everything to hold up, the components need to know in which top level module store they belong which is done by still putting the top level store in the `vuex+.use` and then using the `useStore` mixin.
+For everything to hold up, the components need to know in which top level module store they belong which is done by still putting the top level store in the `vuex+.use`. No need for a mixin at this moment though.
+
 Examples can be found in `./src/components/counter-group/another-counter/another-counter.vue` and below.
 This is how to set it up:
 ```javascript
@@ -218,12 +216,9 @@ This is how to set it up:
   import { use, api } from 'vuex+';
 
   // Specify which top level store to use.
-  const { mapGetters, mapActions, mixins } = use('counter-group-store');
+  const { mapGetters, mapActions } = use('counter-group-store');
 
   export default {
-
-    // Use the addStore mixin to make it instantiable
-    mixins: [mixins.useStore],
     // Use mapActions/mapGetters like normal...
     ...
   };
@@ -291,18 +286,26 @@ The setup is to create a `state` object and pass in into getters, actions, and m
 - Testing mutations: Inject state and verify changes
 
 ### Setup vue/vuex/vuex+/vuex-hmr
-In `./src/main.js` the application in almost set up according to the instructions in [webpack-context-vuex-hmr](https://github.com/presidenten/webpack-context-vuex-hmr). The important thing is that `./app.vue` is loaded _after_ vuex+ has been setup.
+In `./src/main.js` the application in almost set up according to the instructions in [webpack-context-vuex-hmr](https://github.com/presidenten/webpack-context-vuex-hmr). Vuex+ is imported and used as a Vue-plugin.
+The important thing is that `./app.vue` is loaded _after_ vuex+ has been setup.
 ```javascript
-...
-import { setup, hmrCallback } from 'vuex+';
-...
-setup(importer, store);
+import Vue from 'vue';
+import Vuex from 'vuex';
+import VuexPlus from 'vuex+';
 
-const app = require('./app.vue');
+Vue.use(Vuex);
+Vue.use(VuexPlus);
+
+// Create the Vuex store
+const store = new Vuex.Store({
+  strict: process.env.NODE_ENV !== 'production',
+});
+
+/* eslint-disable */
 new Vue({
   el: '#app',
   store,
-  render: h => h(app),
+  render: h => h(require('./app.vue')),
 });
 ```
 

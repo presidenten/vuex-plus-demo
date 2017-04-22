@@ -2,18 +2,18 @@
   import { use, api } from 'vuex+';
   import counter from '../counter.vue';
 
-  const { mapGetters, mapActions, mixins } = use('counter-group-store');
+  const { mapGetters, mapActions } = use('counter-group-store');
+  const anotherCounter = api.counterGroup.anotherCounter;
 
   export default {
-    mixins: [mixins.useStore],
     computed: {
       ...mapGetters({
-        count: api.counterGroup.anotherCounter.get.count,
+        count: anotherCounter.get.count,
       }),
     },
     methods: {
       ...mapActions({
-        increase: api.counterGroup.anotherCounter.act.increase,
+        increase: anotherCounter.act.increase,
       }),
     },
     components: {

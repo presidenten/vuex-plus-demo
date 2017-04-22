@@ -1,7 +1,7 @@
 <script>
   import { api } from 'vuex+';
 
-  import counterList from './components/item-list/item-list.vue';
+  import itemList from './components/item-list/item-list.vue';
 
   export default {
     name: 'app',
@@ -12,7 +12,7 @@
       },
     },
     components: {
-      counterList,
+      itemList,
     },
   };
 </script>
@@ -23,7 +23,7 @@
       <button @click="addCounter" id="add-new">Add new (mod 3)</button>
     </header>
 
-    <counterList></counterList>
+    <itemList></itemList>
   </div>
 </template>
 

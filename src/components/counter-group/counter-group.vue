@@ -5,17 +5,18 @@
   import comboCounter from './another-counter/combo-counter/combo-counter.vue';
 
   const { mapGetters, mapActions, mixins } = use('counter-group-store');
+  const counterGroup = api.counterGroup;
 
   export default {
     mixins: [mixins.addStore],
     computed: {
       ...mapGetters({
-        count: api.counterGroup.get.count,
+        count: counterGroup.get.count,
       }),
     },
     methods: {
       ...mapActions({
-        increase: api.counterGroup.act.increase,
+        increase: counterGroup.act.increase,
       }),
       removeCounter() {
         this.$emit('removeCounter');
@@ -31,7 +32,7 @@
 
 <template>
   <div class="counter-group">
-    <div class="name">Group instance: #{{instance}}</div>
+    <div class="name">Group instance: {{instance}}</div>
     <div class="box">
       <counter name="Counter 1" :count="count" @increase="increase"></counter>
       <anotherCounter></anotherCounter>
@@ -59,7 +60,7 @@
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ddd;
-    background-color: #f3f4ff;
+    background-color: #red;
   }
 
   .name {

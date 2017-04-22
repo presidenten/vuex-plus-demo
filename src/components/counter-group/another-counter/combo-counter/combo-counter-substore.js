@@ -17,7 +17,7 @@ const actions = {
 };
 
 const mutations = {
-  increase(state, amount = 1) {
+  increase(state, amount) {
     console.log('Mutation in Counter3, adding', amount, '\n ');
     state.count += amount;
   },

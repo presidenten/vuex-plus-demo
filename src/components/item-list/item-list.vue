@@ -1,23 +1,24 @@
 <script>
   import { use, api } from 'vuex+';
-  import counter from '../counter/counter-group.vue';
+  import counterGroup from '../counter-group/counter-group.vue';
 
   const { mapGetters, mapActions, mixins } = use('item-list-store');
+  const itemList = api.itemList;
 
   export default {
     mixins: [mixins.addStore],
     computed: {
       ...mapGetters({
-        items: api.itemList.get.items,
+        items: itemList.get.items,
       }),
     },
     methods: {
       ...mapActions({
-        removeItem: api.itemList.act.removeItem,
+        removeItem: itemList.act.removeItem,
       }),
     },
     components: {
-      counter,
+      counterGroup,
     },
   };
 </script>
@@ -25,8 +26,8 @@
 <template>
   <div class="item-list">
     <div v-for="instance in items" :key="instance.id" class="group">
-      <counter :instance="instance.name"
-               @removeCounter="removeItem(instance.id)"></counter>
+      <counterGroup :instance="instance.name"
+               @removeCounter="removeItem(instance.id)"></counterGroup>
     </div>
   </div>
 </template>

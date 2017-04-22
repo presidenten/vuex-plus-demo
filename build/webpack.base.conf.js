@@ -65,8 +65,11 @@ module.exports = {
         }
       },
       {
+        enforce: 'pre',
         test: /-(store|substore)\.js$/,
+        // test: /((-(store|substore)\.js)|.vue)$/,
         loader: 'vuex-plus/loader',
+        options: { stores: [] },
       },
     ],
   },
