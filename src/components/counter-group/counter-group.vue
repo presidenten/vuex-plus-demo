@@ -2,7 +2,6 @@
   import { use, api } from 'vuex+';
   import counter from './counter.vue';
   import anotherCounter from './another-counter/another-counter.vue';
-  import comboCounter from './another-counter/combo-counter/combo-counter.vue';
 
   const { mapGetters, mapActions, mixins } = use('counter-group-store');
   const counterGroup = api.counterGroup;
@@ -25,7 +24,6 @@
     components: {
       counter,
       anotherCounter,
-      comboCounter,
     },
   };
 </script>
@@ -36,7 +34,6 @@
     <div class="box">
       <counter name="Counter 1" :count="count" @increase="increase"></counter>
       <anotherCounter></anotherCounter>
-      <comboCounter></comboCounter>
       <button class="delete" @click="removeCounter(instance.id)">×</button>
     </div>
   </div>

@@ -9,15 +9,13 @@
         this.$emit('increase');
       },
     },
-    components: {
-    },
   };
 </script>
 
 <template>
   <div class="counter">
-      <p>{{name}}: {{count}}</p>
-      <button @click="increase">+</button>
+    <p>{{name}}: {{count}}</p>
+    <button @click="increase">+</button>
   </div>
 </template>
 

@@ -4917,9 +4917,9 @@ vue@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.2.6.tgz#451714b394dd6d4eae7b773c40c2034a59621aed"
 
-vuex-plus@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.2.1.tgz#9670975b65621fcac38b4d9cacc2bad2b4f7cee8"
+vuex-plus@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.2.3.tgz#4f7a37e592cf886ca3bc51222a401d45cda1cdaa"
   dependencies:
     clone "^2.1.1"
     webpack-context-vuex-hmr "^2.1.0"

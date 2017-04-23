@@ -24,12 +24,12 @@
 </script>
 
 <template>
-  <div class="item-list">
+  <transition-group name="fade" appear tag="div" class="item-list">
     <div v-for="instance in items" :key="instance.id" class="group">
-      <counterGroup :instance="instance.name"
-               @removeCounter="removeItem(instance.id)"></counterGroup>
+        <counterGroup :instance="instance.name"
+                      @removeCounter="removeItem(instance.id)"></counterGroup>
     </div>
-  </div>
+  </transition-group>
 </template>
 
 <style scoped>
@@ -39,6 +39,26 @@
     align-items: center;
     flex-wrap: wrap;
     height: 100%;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: transform .75s ease-in-out, opacity 0.75s ease;
+  }
+  .fade-enter {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  .fade-enter-to {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .fade-leave {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .fade-leave-to {
+    transform: scale(0.4);
+    opacity: 0;
   }
 
   .group {
