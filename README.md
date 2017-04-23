@@ -166,34 +166,30 @@ export default store({
 
 ### Using module stores
 
-To use the module store in a component, there is a `use` property available from vuex+. It can in turn be deconstructed into modified `mapGetters` and `mapActions`. It also contains mixins to `addStore` and `useStore`.
+To register a top level store in a component that should be able to be instantiated, there is a [mixin](https://vuejs.org/v2/guide/mixins.html) prepared called `addStore`. `addStore` takes a filename without `.js` to be invoked: `addStore('counter-group-store')`.
 
-When using top level module stores, use `mixins.addStore` to flag that this component can be instantiated.
+Top level stores are a special case, as that they need to use global api when mapping getters and actions through `map.getters` and `map.actions`.
 
 Here is what the script tag should look like in the `.vue`-component:
 (Check out `./src/components/counter-group/counter-group.vue` in the repo)
 ```javascript
 <script>
   // Import `use` and the global `api`
-  import { use, api } from 'vuex+';
-
-  // Specify which store to use.
-  const { mapGetters, mapActions, mixins } = use('counter-group-store');
+  import { map, api, addStore } from 'vuex+';
 
   export default {
-
     // Use the addStore mixin to make it instantiable
-    mixins: [mixins.addStore],
+    mixins: [addStore('counter-group-store')],
 
     computed: {
       // Use the global api to get the correct magic string
       // for mapGetters/actions. It also handles instances.
-      ...mapGetters({
+      ...map.getters({
         count: api.counterGroup.get.count,
       }),
     },
     methods: {
-      ...mapActions({
+      ...map.actions({
         increase: api.counterGroup.act.increase,
       }),
     },
@@ -206,26 +202,33 @@ Here is what the script tag should look like in the `.vue`-component:
 Same as with stores, except the file ending should be `-substore.js`.
 
 ### Using module substores
-For everything to hold up, the components need to know in which top level module store they belong which is done by still putting the top level store in the `vuex+.use`. No need for a mixin at this moment though.
+Using substores is much more straight forward. Just import `{ map }` from `vuex+` and the store you want to map. The store now contains an api with the magic strings and they will automatically be adjusted for global scopes when passed into `map`'s functions.
 
 Examples can be found in `./src/components/counter-group/another-counter/another-counter.vue` and below.
+
 This is how to set it up:
 ```javascript
 <script>
-  // Import `use` and the global `api`
-  import { use, api } from 'vuex+';
-
-  // Specify which top level store to use.
-  const { mapGetters, mapActions } = use('counter-group-store');
+  import { map } from 'vuex+';
+  import anotherCounter from './another-counter-substore.js';
 
   export default {
-    // Use mapActions/mapGetters like normal...
+    computed: {
+      ...map.getters({
+        count: anotherCounter.api.get.count,
+      }),
+    },
+    methods: {
+      ...map.actions({
+        increase: anotherCounter.api.act.increase,
+      }),
+    },
     ...
   };
 </script>
 ```
 
-### Get/Dispatch/Commit to other parts of the same instance
+### Get/Dispatch/Commit to other parts of the same instance in stores
 An extensive example of using Get/Dispatch/Commit from vuex module to/from other module in the same intance can be found in `./src/components/counter-group/another-counter/another-counter-substore.js`.
 There are two different ways:
 1. When working with a direct child, its easiest to just use the childs api:

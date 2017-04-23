@@ -1,20 +1,18 @@
 <script>
-  import { use, api } from 'vuex+';
+  import { map } from 'vuex+';
+  import anotherCounter from './another-counter-substore.js';
   import counter from '../counter.vue';
   import comboCounter from './combo-counter/combo-counter.vue';
 
-  const { mapGetters, mapActions } = use('counter-group-store');
-  const anotherCounter = api.counterGroup.anotherCounter;
-
   export default {
     computed: {
-      ...mapGetters({
-        count: anotherCounter.get.count,
+      ...map.getters({
+        count: anotherCounter.api.get.count,
       }),
     },
     methods: {
-      ...mapActions({
-        increase: anotherCounter.act.increase,
+      ...map.actions({
+        increase: anotherCounter.api.act.increase,
       }),
     },
     components: {
