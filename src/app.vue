@@ -44,7 +44,7 @@
     height: 30px;
     margin: 5px;
     border-radius: 4px;
-    width: 100px;
+    width: 135px;
     color: #333;
   }
 </style>
