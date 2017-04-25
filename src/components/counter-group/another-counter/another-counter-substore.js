@@ -1,4 +1,4 @@
-import { store, api, global, newInstance } from 'vuex+';
+import { store, global, newInstance } from 'vuex+';
 import counter from '@/components/counter/counter-substore.js';
 
 const counter$single = newInstance(counter, 'single');
@@ -15,10 +15,12 @@ const getters = {
 const actions = {
   increase(context, amount) {
     amount = typeof amount === 'number' ? amount : 1;
-    console.log('Action in instance "' + context.state['vuex+'].instance + '", Counter2, adding', amount);
+    console.log('Action in instance "' + (context.state['vuex+'].instance || '')
+                                       + '", Counter, adding', amount);
     context.commit('increase', amount);
 
     console.log('--- Example of dispatching action in child ---');
+    context.dispatch(counter$single.api.act.increase, 10);
     context.dispatch(counter$multi.api.act.increase, 10);
 
     console.log('--- Example of commiting mutation in child ---');
@@ -26,21 +28,21 @@ const actions = {
 
     console.log('--- Example of dispatching action action in same instance ---');
     global.dispatch({
-      path: api.counterGroup.anotherCounter.counter$multi.act.increase,
+      path: global.api.counterGroup.anotherCounter.counter$multi.act.increase,
       data: 1000,
       context,
     });
 
     console.log('--- Example of commiting mutation in same instance ---');
     global.commit({
-      path: api.counterGroup.anotherCounter.counter$multi.mutate.increase,
+      path: global.api.counterGroup.anotherCounter.counter$multi.mutate.increase,
       data: 10000,
       context,
     });
 
     // Example of reading getters from same store instance
-    console.log('--- Example getter from parent ---', global.get({ path: api.counterGroup.get.count, context }));
-    console.log('--- Example getter from child ---', global.get({ path: api.counterGroup.anotherCounter.counter$multi.get.count, context }), '\n ');
+    console.log('--- Example getter from parent ---', global.get({ path: global.api.counterGroup.get.count, context }));
+    console.log('--- Example getter from child ---', global.get({ path: global.api.counterGroup.anotherCounter.counter$multi.get.count, context }), '\n ');
   },
 };
 

@@ -15,11 +15,10 @@ In most cases this will be enough, but sometimes you need something more. Here i
 Enhancements:
 - Instances can be shared across components
 - Flag to decide if the state instance should be clared when the last instance component is destroyed
+- Submodule instances
 - Generated API for magic strings
-- Naming conventions to support automatic HMR out of the box
+- Automatic Vuex HMR (needs naming conventions)
 
-Limitations:
-- Instances populates the vuex store at top level
 
 ## Getting started
 
@@ -60,6 +59,9 @@ Here is an example of the state with two instance of `counterGroup` - the base i
 
 ### Generated APIs
 Wrapping the vuex module exports in the Vuex+ `{store}` method, the stores become [namespaced](https://vuex.vuejs.org/en/modules.html) and get their own local API with magic strings under `module.api`.
+
+The apis exposes `get` for getters, `act` for actions, and `mutate` for mutations.
+
 ```javascript
 import counterGroup from 'counter-group-store.js'
 console.log(counterGroup.api);
@@ -82,8 +84,8 @@ console.log(counterGroup.api);
 
 When stores are used, they also populate a global api pointing to the base instances of all vuex modules.
 ```javascript
-import { api } from 'vuex+';
-console.log(api);
+import { global } from 'vuex+';
+console.log(global.api);
 
 // =>
 
@@ -166,31 +168,31 @@ export default store({
 
 ### Using module stores
 
-To register a top level store in a component that should be able to be instantiated, there is a [mixin](https://vuejs.org/v2/guide/mixins.html) prepared called `addStore`. `addStore` takes a filename without `.js` to be invoked: `addStore('counter-group-store')`.
+To register a top level store in a component that should be able to be instantiated, there is a [mixin](https://vuejs.org/v2/guide/mixins.html) prepared called `addStore`. `addStore` takes a filename without `.js` to be invoked: `const { mixin, api } = addStore('counter-group-store')`.
 
-Top level stores are a special case, as that they need to use global api when mapping getters and actions through `map.getters` and `map.actions`.
-
-Here is what the script tag should look like in the `.vue`-component:
+Here is what the script tag could look like in the `.vue`-component:
 (Check out `./src/components/counter-group/counter-group.vue` in the repo)
 ```javascript
 <script>
   // Import `use` and the global `api`
-  import { map, api, addStore } from 'vuex+';
+  import { map, addStore } from 'vuex+';
+
+  const { mixin, api } = addStore('counter-group-store');
 
   export default {
     // Use the addStore mixin to make it instantiable
-    mixins: [addStore('counter-group-store')],
+    mixins: [mixin],
 
     computed: {
       // Use the global api to get the correct magic string
       // for mapGetters/actions. It also handles instances.
       ...map.getters({
-        count: api.counterGroup.get.count,
+        count: api.get.count,
       }),
     },
     methods: {
       ...map.actions({
-        increase: api.counterGroup.act.increase,
+        increase: api.act.increase,
       }),
     },
     ...
@@ -228,7 +230,38 @@ This is how to set it up:
 </script>
 ```
 
-### Get/Dispatch/Commit to other parts of the same instance in stores
+### Submodule instances
+Using submodules as instances requires two steps:
+(Example can be found in `./src/components/counter-group/another-counter/another-counter-substore.js`)
+1. Register the submodule as instances in the components corresponding store by running it through `newInstance` with the imported store and the instance name. Varbiable naming is important. It should be in this format: `const substoreName$instanceName`.
+Then use the new variable as normal and put it into the modules property when exporting like so:
+
+```javascript
+import { store, newInstance } from 'vuex+';
+import counter from '.../counter-substore.js';
+
+const counter$single = newInstance(counter, 'single');
+const counter$multi = newInstance(counter, 'multi');
+
+export default store({
+  ...
+  modules: {
+    counter$single,
+    counter$multi,
+  },
+})
+```
+
+2. In the component, set instance name to the submodule:
+```javascript
+<comboCounter instance="single" title="Counter 2"></comboCounter>
+<comboCounter instance="multi" title="Counter 2"></comboCounter>
+```
+And thats it. Now the `comboCounter` components are using their own instances of the vuex module substore.
+
+![subinstances](./docs/subinstances.jpg)
+
+### Get/Dispatch/Commit from actions
 An extensive example of using Get/Dispatch/Commit from vuex module to/from other module in the same intance can be found in `./src/components/counter-group/another-counter/another-counter-substore.js`.
 There are two different ways:
 1. When working with a direct child, its easiest to just use the childs api:
@@ -241,17 +274,25 @@ const actions = {
   },
 };
 ```
-
-2. When working with any other module in the instace vuex+ offers an instance property that can be used with global api.
+1a. When working with submodule instances, just use the new instance variable like normal:
 ```javascript
-import { store, api, instance } from 'vuex+';
+const actions = {
+  increase(context, amount) {
+    context.dispatch(counter$single.api.act.increase, 10);
+  },
+};
+```
+
+2. When working with any other module vuex+ offers a global api and methods to easily get/dispatch/commit.
+```javascript
+import { store, global } from 'vuex+';
 
 const actions = {
   increase(context, amount) {
-    instance.get({ path: api.counterGroup.get.count, context })
+    global.get({ path: global.api.counterGroup.get.count, context })
 
-    instance.dispatch({
-      path: api.counterGroup.anotherCounter.comboCounter.act.increase,
+    global.dispatch({
+      path: global.api.counterGroup.anotherCounter.comboCounter.act.increase,
       data: 1000,
       context,
     });
@@ -264,12 +305,18 @@ const actions = {
   },
 };
 ```
+2a. To reach a specific submodule instance from global api, just use the new instance name like normal:
+```javascript
+const actions = {
+    global.get({ path: global.api.counterGroup.counter$single.get.count, context })
+};
+```
 
 ### Get/Dispatch/Commit from vue component
 Example dispatch from vue component to counterGroup instance "":
 (See `./src/app.vue` for an example)
 ```javascript
-this.$store.dispatch(api.counterGroup.act.increase);
+this.$store.dispatch(global.api.counterGroup.act.increase);
 ```
 
 To dispatch to another instance, just replace the instance store name with the instance name. In this case, `counterGroup#foo`:
@@ -288,9 +335,9 @@ The setup is to create a `state` object and pass in into getters, actions, and m
 
 - Testing mutations: Inject state and verify changes
 
-### Setup vue/vuex/vuex+/vuex-hmr
-In `./src/main.js` the application in almost set up according to the instructions in [webpack-context-vuex-hmr](https://github.com/presidenten/webpack-context-vuex-hmr). Vuex+ is imported and used as a Vue-plugin.
-The important thing is that `./app.vue` is loaded _after_ vuex+ has been setup.
+### How to setup Vuex+
+In `./src/main.js` vuex+ is imported and used as a Vue-plugin.
+The important thing is that `./app.vue` is loaded **_after_** vuex+ has been setup.
 ```javascript
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -313,7 +360,7 @@ new Vue({
 ```
 
 ## Under the hood
-Differances from [Vue-cli webpack template](https://github.com/vuejs-templates/webpack) is mainly in `./build/webpack.base.conf.js`:
+Differences from [Vue-cli webpack template](https://github.com/vuejs-templates/webpack) is mainly in `./build/webpack.base.conf.js`:
 - Resolve `vuex+` as `vuex-plus`
 ```javascript
 resolve: {

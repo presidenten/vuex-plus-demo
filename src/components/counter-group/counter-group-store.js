@@ -12,7 +12,8 @@ const getters = {
 const actions = {
   increase(context, amount) {
     amount = typeof amount === 'number' ? amount : 1;
-    console.log('Action in instance "' + context.state['vuex+'].instance + '", Counter1, adding', amount);
+    console.log('Action in instance "' + (context.state['vuex+'].instance || '')
+                                       + '", Counter1, adding', amount);
     context.commit('increase', amount);
   },
 };

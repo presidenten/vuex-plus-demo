@@ -1,5 +1,5 @@
 <script>
-  import { api } from 'vuex+';
+  import { global } from 'vuex+';
 
   import itemList from './components/item-list/item-list.vue';
 
@@ -8,7 +8,7 @@
     methods: {
       // Dispatch action in main instance of item-list-store
       addCounter() {
-        this.$store.dispatch(api.itemList.act.addItem);
+        this.$store.dispatch(global.api.itemList.act.addItem);
       },
     },
     components: {

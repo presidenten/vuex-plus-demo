@@ -9,9 +9,6 @@
       ...map.getters({
         count: counterStore.api.get.count,
       }),
-      counterTitle() {
-        return 'Counter ' + this.title;
-      },
     },
     methods: {
       ...map.actions({
@@ -26,7 +23,7 @@
 
 <template>
   <div class="combo-counter">
-    <counter :name="counterTitle" :count="count" @increase="increase"></counter>
+    <counter :name="title" :count="count" @increase="increase"></counter>
   </div>
 </template>
 

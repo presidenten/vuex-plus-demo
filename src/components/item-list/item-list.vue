@@ -1,17 +1,19 @@
 <script>
-  import { map, api, addStore } from 'vuex+';
+  import { map, addStore } from 'vuex+';
   import counterGroup from '../counter-group/counter-group.vue';
 
+  const { mixin, api } = addStore('item-list-store');
+
   export default {
-    mixins: [addStore('item-list-store')],
+    mixins: [mixin],
     computed: {
       ...map.getters({
-        items: api.itemList.get.items,
+        items: api.get.items,
       }),
     },
     methods: {
       ...map.actions({
-        removeItem: api.itemList.act.removeItem,
+        removeItem: api.act.removeItem,
       }),
     },
     components: {
