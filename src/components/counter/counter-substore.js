@@ -11,14 +11,14 @@ const getters = {
 const actions = {
   increase(context, amount) {
     amount = typeof amount === 'number' ? amount : 1;
-    console.log('Action in instance "' + context.state['vuex+'].instance + '", Counter3, adding', amount);
+    console.log('Action in instance "' + context.state['vuex+'].instance + '", adding', amount);
     context.commit('increase', amount);
   },
 };
 
 const mutations = {
   increase(state, amount) {
-    console.log('Mutation in Counter3, adding', amount, '\n ');
+    console.log('Mutation in Counter, adding', amount, '\n ');
     state.count += amount;
   },
 };

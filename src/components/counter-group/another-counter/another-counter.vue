@@ -1,7 +1,7 @@
 <script>
   import { map } from 'vuex+';
+  import counter from '@/components/counter/counter.vue';
   import anotherCounter from './another-counter-substore.js';
-  import counter from '../counter.vue';
   import comboCounter from './combo-counter/combo-counter.vue';
 
   export default {
@@ -25,7 +25,8 @@
 <template>
   <div class="another-counter">
     <counter name="Counter 2" :count="count" @increase="increase"></counter>
-    <comboCounter subinstance="hejje"></comboCounter>
+    <comboCounter instance="single" title="3"></comboCounter>
+    <comboCounter instance="multi" title="mix"></comboCounter>
   </div>
 </template>
 

@@ -14,7 +14,7 @@
 
 <template>
   <div class="counter">
-    <p>{{name}}: {{count}}</p>
+    <div class="count"><p>{{name}}:</p> <p>{{count}}</p></div>
     <button @click="increase">+</button>
   </div>
 </template>
@@ -23,9 +23,18 @@
   .counter {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     font-size: 12px;
   }
+
+  .count {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 5px;
+  }
+
 </style>

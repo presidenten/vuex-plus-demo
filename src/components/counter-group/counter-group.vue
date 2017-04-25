@@ -1,8 +1,7 @@
 <script>
   import { map, api, addStore } from 'vuex+';
-  import counter from './counter.vue';
+  import counter from '@/components/counter/counter.vue';
   import anotherCounter from './another-counter/another-counter.vue';
-  import testCounter from './test-counter/test-counter.vue';
 
   export default {
     mixins: [addStore('counter-group-store')],
@@ -22,7 +21,6 @@
     components: {
       counter,
       anotherCounter,
-      testCounter,
     },
   };
 </script>
@@ -33,7 +31,6 @@
     <div class="box">
       <counter name="Counter 1" :count="count" @increase="increase"></counter>
       <anotherCounter></anotherCounter>
-      <testCounter></testCounter>
       <button class="delete" @click="removeCounter(instance.id)">×</button>
     </div>
   </div>
@@ -53,7 +50,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100px;
+    width: 120px;
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ddd;
