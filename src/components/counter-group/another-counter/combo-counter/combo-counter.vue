@@ -4,6 +4,7 @@
   import comboCounter from './combo-counter-substore.js';
 
   export default {
+    props: ['subinstance'],
     computed: {
       ...map.getters({
         count: comboCounter.api.get.count,

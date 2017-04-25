@@ -1,5 +1,5 @@
 import { store } from 'vuex+';
-import comboCounter from './combo-counter/combo-counter-substore.js';
+import comboCounter from '../another-counter/combo-counter/combo-counter-substore.js';
 
 const initialState = {
   count: 0,
@@ -15,8 +15,8 @@ const actions = {
     console.log('Action in instance "' + context.state['vuex+'].instance + '", Counter2, adding', amount);
     context.commit('increase', amount);
 
-    console.log('--- Example of dispatching action in child ---', comboCounter.api.act.increase.replace('comboCounter/', 'comboCounter#hej/'));
-    context.dispatch(comboCounter.api.act.increase.replace('comboCounter/', 'comboCounter#hejje/'), 10);
+    console.log('--- Example of commiting mutation in child ---');
+    context.commit(comboCounter.api.mutate.increase.replace('comboCounter/', 'comboCounter#sansa/'), 100);
   },
 };
 
@@ -34,6 +34,6 @@ export default store({
   actions,
   mutations,
   modules: {
-    ['comboCounter#hejje']: comboCounter, // eslint-disable-line
+    ['comboCounter#sansa']: comboCounter, // eslint-disable-line
   },
 });

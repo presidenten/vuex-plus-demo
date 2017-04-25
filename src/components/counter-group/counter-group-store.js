@@ -1,5 +1,6 @@
 import { store } from 'vuex+';
 import anotherCounter from './another-counter/another-counter-substore.js';
+import testCounter from './test-counter/test-counter-substore.js';
 
 const initialState = {
   count: 0,
@@ -31,5 +32,6 @@ export default store({
   mutations,
   modules: {
     anotherCounter,
+    testCounter,
   },
 });

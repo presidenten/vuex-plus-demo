@@ -25,7 +25,7 @@
 <template>
   <div class="another-counter">
     <counter name="Counter 2" :count="count" @increase="increase"></counter>
-    <comboCounter></comboCounter>
+    <comboCounter subinstance="hejje"></comboCounter>
   </div>
 </template>
 
