@@ -283,46 +283,52 @@ const actions = {
 };
 ```
 
-2. When working with any other module vuex+ offers a global api and methods to easily get/dispatch/commit.
+2. When working with any other modules or getters, vuex+ offers a global api and methods to easily get/dispatch/commit.
 ```javascript
 import { store, global } from 'vuex+';
 
 const actions = {
   increase(context, amount) {
-    global.get({ path: global.api.counterGroup.get.count, context })
+    global.get({ path: global.api.counterGroup.get.count, context, local: true })
 
     global.dispatch({
       path: global.api.counterGroup.anotherCounter.comboCounter.act.increase,
       data: 1000,
       context,
+      local: true
     });
 
     instance.commit({
       path: api.counterGroup.anotherCounter.comboCounter.mutate.increase,
       data: 1000,
       context,
+      local: true,
     });
   },
 };
 ```
+
 2a. To reach a specific submodule instance from global api, just use the new instance name like normal:
 ```javascript
 const actions = {
-    global.get({ path: global.api.counterGroup.counter$single.get.count, context })
+    global.get({ path: global.api.counterGroup.counter$single.get.count, context, local: true })
 };
 ```
 
-### Get/Dispatch/Commit from vue component
+2b. To reach a specific top store instance from global api, skip flag `local: true` and use the top stores instance name. Here is an example for `counterGroup$foo`:
+```javascript
+const actions = {
+    global.get({ path: global.api.counterGroup$foo.counter$single.get.count, context })
+};
+```
+
+### Global Get/Dispatch/Commit from vue component
 Example dispatch from vue component to counterGroup instance "":
 (See `./src/app.vue` for an example)
 ```javascript
-this.$store.dispatch(global.api.counterGroup.act.increase);
+this.$store.dispatch(global.api.counterGroup$foo.act.increase););
 ```
 
-To dispatch to another instance, just replace the instance store name with the instance name. In this case, `counterGroup#foo`:
-```javascript
-api.counterGroup.act.increase.replace('counterGroup/', 'counterGroup#foo/');
-```
 
 ### Writing tests
 Since the vuex modules dont really know anything about the instance handling, tests are pretty straight forward and isolated.

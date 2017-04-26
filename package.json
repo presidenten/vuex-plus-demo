@@ -1,6 +1,6 @@
 {
   "name": "vuex-plus-demo",
-  "version": "0.5.2",
+  "version": "0.5.4",
   "description": "Example application using Vuex+",
   "author": "Johan Hernefeldt <johans.inbox@gmail.com> (https://github.com/presidenten)",
   "scripts": {
@@ -28,7 +28,7 @@
     "clone": "^2.1.1",
     "vue": "^2.2.6",
     "vuex": "^2.3.1",
-    "vuex-plus": "^0.5.2"
+    "vuex-plus": "^0.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",
