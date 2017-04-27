@@ -6,6 +6,7 @@ const initialState = {
 
 const getters = {
   count: state => state.count,
+  piri: state => state.count + '!',
 };
 
 const actions = {

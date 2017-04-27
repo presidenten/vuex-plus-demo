@@ -1,7 +1,6 @@
 import { store, global, newInstance } from 'vuex+';
 import counter from '@/components/counter/counter-substore.js';
 
-
 const counter$single = newInstance(counter, 'single');
 const counter$multi = newInstance(counter, 'multi');
 
@@ -11,6 +10,8 @@ const initialState = {
 
 const getters = {
   count: state => state.count,
+  // Example mapping state from global for filtering or other interesting things
+  parentCount: state => global.get({ path: global.api.counterGroup.get.count, state, local: true }),
 };
 
 const actions = {
@@ -43,12 +44,15 @@ const actions = {
       local: true,
     });
 
+    // Example of reading own getters like normal
+    console.log('--- Example parentCount getter from self, no vuex+ needed ---', context.getters.parentCount);
+    console.log('--- Example child getter, counter$single, no vuex+ needed ---', counter$single.getters.count(context.state.counter$single));
     // Example of reading getters from global
     if(global.api.counterGroup) console.log('--- Example getter from parent with with known istance name "" ---', global.get({ path: global.api.counterGroup.get.count, context })); // eslint-disable-line
     if(global.api.counterGroup$foo) console.log('--- Example getter from parent with known instanc ename "foo" ---', global.get({ path: global.api.counterGroup$foo.get.count, context })); // eslint-disable-line
     console.log('--- Example getter from parent with global.get in same instance ---', global.get({ path: global.api.counterGroup.get.count, context, local: true }));
     // Example of reading getters from children
-    console.log('--- Example getter from child in same instanse ---', global.get({ path: global.api.counterGroup.anotherCounter.counter$multi.get.count, context, local: true }));
+    console.log('--- Example getter from child in same instance ---', global.get({ path: global.api.counterGroup.anotherCounter.counter$multi.get.count, context, local: true }));
   },
 };
 

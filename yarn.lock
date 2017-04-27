@@ -4919,7 +4919,7 @@ vue@^2.2.6:
 
 vuex-plus@^0.5.7:
   version "0.5.7"
-  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.5.7.tgz#8faf767bdc706c773117d708fc57555edfd8131a"
+  resolved "http://cgdev.upp.telia.se:4873/vuex-plus/-/vuex-plus-0.5.7.tgz#8faf767bdc706c773117d708fc57555edfd8131a"
   dependencies:
     clone "^2.1.1"
     webpack-context-vuex-hmr "^2.1.0"
@@ -4953,7 +4953,7 @@ webpack-bundle-analyzer@^2.4.0:
 
 webpack-context-vuex-hmr@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.yarnpkg.com/webpack-context-vuex-hmr/-/webpack-context-vuex-hmr-2.1.0.tgz#904229cd650c67620cd07cad8b6d0f661b1b106b"
+  resolved "http://cgdev.upp.telia.se:4873/webpack-context-vuex-hmr/-/webpack-context-vuex-hmr-2.1.0.tgz#904229cd650c67620cd07cad8b6d0f661b1b106b"
 
 webpack-dev-middleware@^1.10.2:
   version "1.10.2"

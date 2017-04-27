@@ -344,7 +344,7 @@ The setup is to create a `state` object and pass in into getters, actions, and m
 - Testing mutations: Inject state and verify changes
 
 ### How to setup Vuex+
-In `./src/main.js` vuex+ is imported and used as a Vue-plugin.
+In `./src/main.js` vuex+ is imported and used as a Vue-plugin and a Vuex-plugin.
 The important thing is that `./app.vue` is loaded **_after_** vuex+ has been setup.
 ```javascript
 import Vue from 'vue';
@@ -352,11 +352,12 @@ import Vuex from 'vuex';
 import VuexPlus from 'vuex+';
 
 Vue.use(Vuex);
-Vue.use(VuexPlus);
+Vue.use(VuexPlus.vuePlugin);
 
 // Create the Vuex store
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
+  plugins: [VuexPlus.vuexPlugin],
 });
 
 /* eslint-disable */
