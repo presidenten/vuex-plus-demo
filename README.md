@@ -28,6 +28,7 @@ Enhancements:
 - Run tests with `npm run test`
 - Start the dev server `npm run dev`
 - Open http://localhost:8080 and a devtools window with javascript console
+- Click around, check console, vue devtools and mess with the code to get a feel for it.
 
 ## Vuex+ Tutorial
 ### Basic usage of instances
