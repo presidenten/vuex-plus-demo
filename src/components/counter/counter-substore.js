@@ -15,9 +15,6 @@ const actions = {
                                        + '", adding', amount);
     context.commit('increase', amount);
   },
-  oury(context) {
-    console.info('context', context);
-  },
 };
 
 const mutations = {
