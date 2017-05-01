@@ -1,0 +1,22 @@
+{
+  "bail": true,
+  "testMatch": [
+    "**/?(*.)(spec).js?(x)"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "vue"
+  ],
+  "clearMocks": true,
+  "resetMocks": true,
+  "resetModules": true,
+  "transform": {
+    ".*": "<rootDir>/node_modules/webpack-babel-jest"
+  },
+  "moduleNameMapper": {
+    "^vue$": "vue/dist/vue.common.js",
+    "@": "<rootDir>/src",
+    "vuex+": "vuex-plus"
+  }
+}

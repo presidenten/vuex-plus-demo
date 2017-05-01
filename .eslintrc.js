@@ -31,15 +31,16 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   },
   "globals": {
-      "describe": true,
-      "xdescribe": true,
-      "fdescribe": true,
-      "beforeEach": true,
-      "afterEach": true,
-      "spyOn": true,
-      "it": true,
-      "xit": true,
-      "fit": true,
-      "expect": true,
+    "describe": true,
+    "xdescribe": true,
+    "fdescribe": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "spyOn": true,
+    "it": true,
+    "xit": true,
+    "fit": true,
+    "expect": true,
+    "jest": true,
   }
 }

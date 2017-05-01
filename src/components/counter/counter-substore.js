@@ -6,13 +6,12 @@ const initialState = {
 
 const getters = {
   count: state => state.count,
-  piri: state => state.count + '!',
 };
 
 const actions = {
   increase(context, amount) {
     amount = typeof amount === 'number' ? amount : 1;
-    console.log('Action in instance "' + (context.state['vuex+'].instance || '')
+    console.log('Action in counter "' + (context.state['vuex+'].instance || '')
                                        + '", adding', amount);
     context.commit('increase', amount);
   },

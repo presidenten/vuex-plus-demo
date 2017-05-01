@@ -5,6 +5,8 @@ This demo shows how to use [vuex+](https://github.com/presidenten/vuex-plus) to 
 
 This project is based upon the [vue-cli webpack template](https://github.com/vuejs-templates/webpack), and been modified to show some examples of working with dynamic creation/destruction of component instances with dynamic vuex stores for each instance.
 
+### Heads up
+The main purpose of this project is to show some examples of how to get things done with `vuex+`. I kept things as simple as possible with only super simple counters implemented everywhere, to keep the focus on `vuex+`,
 The thought behind the code structure is to keep things that use each other close. Only very light logic goes into vue components, heavy logic goes into vuex models and services.
 
 ### Enhancements over Vuex instance handling (2.3.0)+
@@ -291,20 +293,19 @@ import { store, global } from 'vuex+';
 
 const actions = {
   increase(context, amount) {
-    global.get({ path: global.api.counterGroup.get.count, context, local: true })
+    global.get({ path: global.api.counterGroup.get.count,
+    state: context.state })
 
     global.dispatch({
       path: global.api.counterGroup.anotherCounter.comboCounter.act.increase,
       data: 1000,
-      context,
-      local: true
+      state: context.state,
     });
 
     instance.commit({
       path: api.counterGroup.anotherCounter.comboCounter.mutate.increase,
       data: 1000,
-      context,
-      local: true,
+      state: context.state,
     });
   },
 };
@@ -313,14 +314,14 @@ const actions = {
 2a. To reach a specific submodule instance from global api, just use the new instance name like normal:
 ```javascript
 const actions = {
-    global.get({ path: global.api.counterGroup.counter$single.get.count, context, local: true })
+    global.get({ path: global.api.counterGroup.counter$single.get.count, state: context.state})
 };
 ```
 
-2b. To reach a specific top store instance from global api, skip flag `local: true` and use the top stores instance name. Here is an example for `counterGroup$foo`:
+2b. To reach a specific top store instance from global api, skip the `state` propery, and use the top stores instance name. Here is an example for `counterGroup$foo`:
 ```javascript
 const actions = {
-    global.get({ path: global.api.counterGroup$foo.counter$single.get.count, context })
+    global.get({ path: global.api.counterGroup$foo.counter$single.get.count })
 };
 ```
 
@@ -328,6 +329,8 @@ const actions = {
 Example dispatch from vue component to counterGroup instance "":
 (See `./src/app.vue` for an example)
 ```javascript
+global.dispatch({ path: global.api.counterGroup$foo.act.increase });
+// or
 this.$store.dispatch(global.api.counterGroup$foo.act.increase););
 ```
 
@@ -342,6 +345,19 @@ The setup is to create a `state` object and pass in into getters, actions, and m
 - Testing actions: Inject state and the spied context and verify that the actions dispatches and commits as planned.
 
 - Testing mutations: Inject state and verify changes
+
+### Gotchas
+- Binding global getter in computed to top store instances will give console error if used before the instance is created, since the api object subtree wont actually exist until then.
+No worries after destruction though.
+Example:
+  ```javascript
+  computed: {
+    parentCount() {
+      return global.get({ path: global.api.counterGroup$foo.get.count });
+    },
+  },
+  ```
+
 
 ### How to setup Vuex+
 In `./src/main.js` vuex+ is imported and used as a Vue-plugin and a Vuex-plugin.

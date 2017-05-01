@@ -1,5 +1,5 @@
 <script>
-  import { map } from 'vuex+';
+  import { map, global } from 'vuex+';
   import counter from '@/components/counter/counter.vue';
   import anotherCounter from './another-counter-substore.js';
   import comboCounter from './combo-counter/combo-counter.vue';
@@ -9,6 +9,10 @@
       ...map.getters({
         count: anotherCounter.api.get.count,
       }),
+      counterGroupCount() {
+        // Example getter from global
+        return global.get({ path: global.api.counterGroup.get.count });
+      },
     },
     methods: {
       ...map.actions({
@@ -24,6 +28,7 @@
 
 <template>
   <div class="another-counter">
+    <div class="counter-group">From global: {{counterGroupCount}}</div>
     <comboCounter instance="single" title="Counter 2"></comboCounter>
     <counter name="Counter 3" :count="count" @increase="increase" class="extra-arrow"></counter>
     <comboCounter instance="multi" title="Counter ext"></comboCounter>
@@ -35,6 +40,12 @@
     position: relative;
     width: 100%;
     border: 1px solid #ddd;
+  }
+
+  .counter-group {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
   }
 
   .extra-arrow {

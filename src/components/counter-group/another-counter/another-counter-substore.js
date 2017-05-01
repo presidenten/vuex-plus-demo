@@ -10,8 +10,8 @@ const initialState = {
 
 const getters = {
   count: state => state.count,
-  // Example mapping state from global for filtering or other interesting things
-  parentCount: state => global.get({ path: global.api.counterGroup.get.count, state, local: true }),
+  // Example mapping state from global
+  parentCount: state => global.get({ path: global.api.counterGroup.get.count, state }),
 };
 
 const actions = {
@@ -32,27 +32,25 @@ const actions = {
     global.dispatch({
       path: global.api.counterGroup.anotherCounter.counter$multi.act.increase,
       data: 1000,
-      context,
-      local: true,
+      state: context.state, // Skip state property to make the call global
     });
 
     console.log('--- Example of commiting mutation in same instance ---');
     global.commit({
       path: global.api.counterGroup.anotherCounter.counter$multi.mutate.increase,
       data: 10000,
-      context,
-      local: true,
+      state: context.state, // Skip state property to make the call global
     });
 
     // Example of reading own getters like normal
     console.log('--- Example parentCount getter from self, no vuex+ needed ---', context.getters.parentCount);
     console.log('--- Example child getter, counter$single, no vuex+ needed ---', counter$single.getters.count(context.state.counter$single));
     // Example of reading getters from global
-    if(global.api.counterGroup) console.log('--- Example getter from parent with with known istance name "" ---', global.get({ path: global.api.counterGroup.get.count, context })); // eslint-disable-line
-    if(global.api.counterGroup$foo) console.log('--- Example getter from parent with known instanc ename "foo" ---', global.get({ path: global.api.counterGroup$foo.get.count, context })); // eslint-disable-line
-    console.log('--- Example getter from parent with global.get in same instance ---', global.get({ path: global.api.counterGroup.get.count, context, local: true }));
+    if(global.api.counterGroup) console.log('--- Example getter from parent with with known istance name "" ---', global.get({ path: global.api.counterGroup.get.count })); // eslint-disable-line
+    if(global.api.counterGroup$foo) console.log('--- Example getter from parent with known instanc ename "foo" ---', global.get({ path: global.api.counterGroup$foo.get.count })); // eslint-disable-line
+    console.log('--- Example getter from parent with global.get in same instance ---', global.get({ path: global.api.counterGroup.get.count, state: context.state }));
     // Example of reading getters from children
-    console.log('--- Example getter from child in same instance ---', global.get({ path: global.api.counterGroup.anotherCounter.counter$multi.get.count, context, local: true }));
+    console.log('--- Example getter from child in same instance ---', global.get({ path: global.api.counterGroup.anotherCounter.counter$multi.get.count, state: context.state }), '\n '); //eslint-disable-line
   },
 };
 

@@ -1,13 +1,6 @@
-import chai from 'chai';
-import sinon from 'sinon';
-import sinonChai from 'sinon-chai';
-import itemList from './item-list-store.js';
+import itemList from './item-list-store.js'; // eslint-disable-line
 
 const { getters, mutations, actions } = itemList;
-
-chai.use(sinonChai);
-const { expect } = chai;
-console.debug = () => {};
 
 describe('Components: counter-list', () => {
   let state;
@@ -18,19 +11,21 @@ describe('Components: counter-list', () => {
     };
     context = {
       state,
-      dispatch: sinon.spy(),
-      commit: sinon.spy(),
+      dispatch() {},
+      commit() {},
     };
+    jest.spyOn(context, 'dispatch');
+    jest.spyOn(context, 'commit');
   });
 
   describe('Getters', () => {
     it('items should return items', () => {
-      expect(getters.items(state)).to.equal(state.items);
+      expect(getters.items(state)).toEqual(state.items);
     });
     it('nrOfItems should return amount of items', () => {
-      expect(getters.nrOfItems(state)).to.equal(0);
+      expect(getters.nrOfItems(state)).toEqual(0);
       state.items = [1, 2, 3];
-      expect(getters.nrOfItems(state)).to.equal(3);
+      expect(getters.nrOfItems(state)).toEqual(3);
     });
   });
 
@@ -38,13 +33,13 @@ describe('Components: counter-list', () => {
     it('addItem should commit mutation', () => {
       actions.addItem(context);
 
-      expect(context.commit).calledWith('addItem');
+      expect(context.commit).toBeCalledWith('addItem');
     });
 
     it('removeItem should commit mutation', () => {
       actions.removeItem(context, 42);
 
-      expect(context.commit).calledWith('removeItem', 42);
+      expect(context.commit).toBeCalledWith('removeItem', 42);
     });
   });
 
@@ -52,14 +47,14 @@ describe('Components: counter-list', () => {
     it('addItem should add a counter group', () => {
       mutations.addItem(state);
 
-      expect(state.items.length).to.equal(1);
+      expect(state.items.length).toEqual(1);
     });
 
     it('removeItem should remove a counter group', () => {
       state.items.push({ name: '', id: 0 });
       mutations.removeItem(state, 0);
 
-      expect(state.items.length).to.equal(0);
+      expect(state.items.length).toEqual(0);
     });
   });
 });

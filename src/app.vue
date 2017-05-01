@@ -1,6 +1,5 @@
 <script>
   import { global } from 'vuex+';
-
   import itemList from './components/item-list/item-list.vue';
 
   export default {
@@ -13,6 +12,9 @@
     },
     components: {
       itemList,
+    },
+    mounted() {
+      // console.info('api', global.api, '\nactions', this.$store['_actions']); // eslint-disable-line
     },
   };
 </script>

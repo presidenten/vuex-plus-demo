@@ -77,7 +77,7 @@ module.exports = {
       /webpack-context-vuex-hmr$/,           // [leave me] this file
       path.resolve(process.cwd(), './src'),  // [edit me]  context root path
       true,                                  // [edit me]  recursive search
-      /-store.js|-substore.js$/              // [edit me]  regexp to find modules
+      /-store.js$/                           // [edit me]  regexp to find modules
     ),
     new webpack.ProvidePlugin({
       Promise: 'es6-promise-promise'
