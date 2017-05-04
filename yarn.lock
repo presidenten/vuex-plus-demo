@@ -5329,9 +5329,9 @@ vue@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.2.6.tgz#451714b394dd6d4eae7b773c40c2034a59621aed"
 
-vuex-plus@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.7.0.tgz#99191b4a2d47bf108059a961b9a647744be96305"
+vuex-plus@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/vuex-plus/-/vuex-plus-0.7.1.tgz#4c7342183fd2c0e562a30baac9c25abf53f1a0ce"
   dependencies:
     babel-jest "^19.0.0"
     clone "^2.1.1"
