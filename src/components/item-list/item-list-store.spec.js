@@ -22,6 +22,7 @@ describe('Components: counter-list', () => {
     it('items should return items', () => {
       expect(getters.items(state)).toEqual(state.items);
     });
+
     it('nrOfItems should return amount of items', () => {
       expect(getters.nrOfItems(state)).toEqual(0);
       state.items = [1, 2, 3];
