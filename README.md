@@ -417,7 +417,7 @@ plugins: [
 ],
 ```
 
-- Not using Karma at the moment
+- Using [jest](https://github.com/facebook/jest) for testing
 
 # License
 MIT
