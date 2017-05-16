@@ -11,11 +11,9 @@ describe('Components: counter-list', () => {
     };
     context = {
       state,
-      dispatch() {},
-      commit() {},
+      dispatch: jest.fn(),
+      commit: jest.fn(),
     };
-    jest.spyOn(context, 'dispatch');
-    jest.spyOn(context, 'commit');
   });
 
   describe('Getters', () => {
