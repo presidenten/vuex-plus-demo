@@ -8,6 +8,9 @@
       counter,
       subCounter,
     },
+    data: () => ({
+      arrowsVisible: false,
+    }),
     computed: {
       ...map.getters({
         count: 'anotherCounter/count',
@@ -22,17 +25,31 @@
       ...map.actions({
         increase: 'anotherCounter/increase',
       }),
+      click() {
+        this.arrowsVisible = true;
+        setTimeout(() => {
+          this.increase();
+          this.arrowsVisible = false;
+        }, 300);
+      },
     },
   };
 </script>
 
 <template>
   <div class="another-counter">
-    <div class="counter-group">
+    <div class="parent-group">
       From parent {{ parent }}
       From root: {{counterGroupCount}}
     </div>
-    <counter name="A. Counter" :count="count" @increase="increase" class="extra-arrow"></counter>
+    <counter name="A. Counter" :count="count" @increase="click"></counter>
+    <transition name="fade" class="arrow-container">
+      <div v-if="arrowsVisible" >
+        <div class="arrow a">⤸</div>
+        <div class="arrow b">⤸</div>
+        <div class="arrow c">⤸</div>
+      </div>
+    </transition>
     <subCounter instance="single" title="SubCounter 1"></subCounter>
     <subCounter instance="multi" title="SubCounter 2"></subCounter>
   </div>
@@ -45,30 +62,46 @@
     border: 1px solid #ddd;
   }
 
-  .counter-group {
-    margin-bottom: 10px;
+  .parent-group {
+    margin-bottom: 3px;
     border-bottom: 1px solid #ddd;
     text-align: center;
   }
 
-  .extra-arrow {
-    position: relative;
+  .arrow-container {
+    position: absolute;
   }
 
-  .extra-arrow:before {
-    content: "⤸";
+  .arrow {
     position: absolute;
+  }
+
+  .arrow.a {
+    right: -10px;
+    top: 14px;
     transform: scaleY(-5) scaleX(2);
-    right: -10px;
-    top: -28px;
   }
 
-  .extra-arrow:after {
-    content: "⤸\A⤸";
-    white-space: pre; /* or pre-wrap */
-    position: absolute;
-    transform: scaleY(1) scaleX(1.2);
+  .arrow.b {
     right: -10px;
-    bottom: -15px;
+    top: 55px;
+    transform: scaleY(2) scaleX(2);
+  }
+
+  .arrow.c {
+    right: -14px;
+    top: 71px;
+    transform: scaleY(4.5) scaleX(2) rotate(15deg);
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  /* Om transition så används dessa klasser */
+  .fade-enter,        /* Initialvärde innan något kommer in i domen */
+  .fade-leave-to {    /* Slutvärde när något lämnat domen */
+    opacity: 0;
   }
 </style>
