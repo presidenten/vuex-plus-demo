@@ -28,5 +28,6 @@
 
 <style scoped>
   .normal-vuex-counter {
+    margin-top: 5px;
   }
 </style>
