@@ -29,7 +29,7 @@ describe('Components: counter-list', () => {
   });
 
   describe('Actions', () => {
-    it('addItem should commit mutation', () => {
+    it('addItem should commit mutation 2', () => {
       actions.addItem(context);
 
       expect(context.commit).toBeCalledWith('addItem');

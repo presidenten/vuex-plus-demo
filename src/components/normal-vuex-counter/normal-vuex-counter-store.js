@@ -1,5 +1,3 @@
-import { store } from 'vuex+';
-
 const initialState = {
   count: 0,
 };
@@ -11,8 +9,7 @@ const getters = {
 const actions = {
   increase(context, amount) {
     amount = typeof amount === 'number' ? amount : 1;
-    console.log('Action in counter "' + (context.state['vuex+'].instance || '')
-                                       + '", adding', amount);
+    console.log('Action in counter normal vuex counter, adding', amount);
     context.commit('increase', amount);
   },
 };
@@ -25,9 +22,11 @@ const mutations = {
 };
 
 
-export default store({
+export default {
+  name: 'normalVuexCounter',
+  namespaced: true,
   state: initialState,
   getters,
   actions,
   mutations,
-});
+};

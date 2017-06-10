@@ -1,20 +1,16 @@
 <script>
-  import { global } from 'vuex+';
   import itemList from './components/item-list/item-list.vue';
 
   export default {
     name: 'app',
-    methods: {
-      // Dispatch action in main instance of item-list-store
-      addCounter() {
-        this.$store.dispatch(global.api.itemList.act.addItem);
-      },
-    },
     components: {
       itemList,
     },
-    mounted() {
-      // console.info('api', global.api, '\nactions', this.$store['_actions']); // eslint-disable-line
+    methods: {
+      addCounter() {
+        // Dispatch action in main instance of item-list-store
+        this.$store.dispatch('itemList/addItem');
+      },
     },
   };
 </script>

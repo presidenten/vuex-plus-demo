@@ -1,5 +1,4 @@
 import { store } from 'vuex+';
-import anotherCounter from './another-counter/another-counter-substore.js';
 
 const initialState = {
   count: 0,
@@ -12,24 +11,22 @@ const getters = {
 const actions = {
   increase(context, amount) {
     amount = typeof amount === 'number' ? amount : 1;
-    console.log('Action in instance "' + (context.state['vuex+'].instance || '') + '", Counter1, adding', amount);
+    console.log('Action in counter "' + (context.state['vuex+'].instance || '') + '", adding', amount);
     context.commit('increase', amount);
   },
 };
 
 const mutations = {
   increase(state, amount) {
-    console.log('Mutation in Counter1, adding', amount, '\n ');
+    console.log('Mutation in Counter, adding', amount, '\n ');
     state.count += amount;
   },
 };
+
 
 export default store({
   state: initialState,
   getters,
   actions,
   mutations,
-  modules: {
-    anotherCounter,
-  },
 });

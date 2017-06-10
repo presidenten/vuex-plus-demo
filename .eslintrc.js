@@ -28,7 +28,8 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'import/extensions': 0,
     'class-methods-use-this': 0,
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'max-len': ["warn", 140, { "ignoreComments": true }]
   },
   "globals": {
     "describe": true,

@@ -1,28 +1,29 @@
 <script>
-  import { map, addStore } from 'vuex+';
-  import counter from '@/components/counter/counter.vue';
+  import { map, register } from 'vuex+';
+  import counter from '@/common/ui/counter.vue';
+  import normalCounter from '@/components/normal-vuex-counter/normal-vuex-counter.vue';
+
   import anotherCounter from './another-counter/another-counter.vue';
 
-  const { mixin, api } = addStore('counter-group-store');
-
   export default {
-    mixins: [mixin],
+    mixins: [register('counter-group-store')], // filename without `.js`
+    components: {
+      counter,
+      normalCounter,
+      anotherCounter,
+    },
     computed: {
       ...map.getters({
-        count: api.get.count,
+        count: 'counterGroup/count',
       }),
     },
     methods: {
       ...map.actions({
-        increase: api.act.increase,
+        increase: 'counterGroup/increase',
       }),
       removeCounter() {
         this.$emit('removeCounter');
       },
-    },
-    components: {
-      counter,
-      anotherCounter,
     },
   };
 </script>
@@ -31,8 +32,12 @@
   <div class="counter-group">
     <div class="name">Group instance: {{instance}}</div>
     <div class="box">
-      <counter name="Counter 1" :count="count" @increase="increase"></counter>
+      <counter name="Top Counter" :count="count" @increase="increase"></counter>
+
       <anotherCounter></anotherCounter>
+
+      <normalCounter></normalCounter>
+
       <button class="delete" @click="removeCounter(instance.id)">×</button>
     </div>
   </div>

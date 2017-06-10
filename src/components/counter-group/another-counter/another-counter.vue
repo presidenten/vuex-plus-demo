@@ -1,37 +1,40 @@
 <script>
-  import { map, global } from 'vuex+';
-  import counter from '@/components/counter/counter.vue';
-  import anotherCounter from './another-counter-substore.js';
-  import comboCounter from './combo-counter/combo-counter.vue';
+  import { map, root } from 'vuex+';
+  import counter from '@/common/ui/counter.vue';
+  import subCounter from './sub-counter/sub-counter.vue';
 
   export default {
+    components: {
+      counter,
+      subCounter,
+    },
     computed: {
       ...map.getters({
-        count: anotherCounter.api.get.count,
+        count: 'anotherCounter/count',
+        parent: 'anotherCounter/parentCount',
       }),
       counterGroupCount() {
-        // Example getter from global
-        return global.get({ path: global.api.counterGroup.get.count });
+        // Example getter from root
+        return root.get({ path: 'counterGroup/count' });
       },
     },
     methods: {
       ...map.actions({
-        increase: anotherCounter.api.act.increase,
+        increase: 'anotherCounter/increase',
       }),
-    },
-    components: {
-      counter,
-      comboCounter,
     },
   };
 </script>
 
 <template>
   <div class="another-counter">
-    <div class="counter-group">From global: {{counterGroupCount}}</div>
-    <comboCounter instance="single" title="Counter 2"></comboCounter>
-    <counter name="Counter 3" :count="count" @increase="increase" class="extra-arrow"></counter>
-    <comboCounter instance="multi" title="Counter ext"></comboCounter>
+    <div class="counter-group">
+      From parent {{ parent }}
+      From root: {{counterGroupCount}}
+    </div>
+    <counter name="A. Counter" :count="count" @increase="increase" class="extra-arrow"></counter>
+    <subCounter instance="single" title="SubCounter 1"></subCounter>
+    <subCounter instance="multi" title="SubCounter 2"></subCounter>
   </div>
 </template>
 
@@ -55,15 +58,17 @@
   .extra-arrow:before {
     content: "⤸";
     position: absolute;
-    transform: scaleY(-1);
+    transform: scaleY(-5) scaleX(2);
     right: -10px;
-    top: -8px;
+    top: -28px;
   }
 
   .extra-arrow:after {
-    content: "⤸";
+    content: "⤸\A⤸";
+    white-space: pre; /* or pre-wrap */
     position: absolute;
+    transform: scaleY(1) scaleX(1.2);
     right: -10px;
-    bottom: -10px;
+    bottom: -15px;
   }
 </style>

@@ -1,34 +1,33 @@
 <script>
   import { map } from 'vuex+';
-  import counter from '@/components/counter/counter.vue';
-  import counterStore from '@/components/counter/counter-substore.js';
+  import counter from '@/common/ui/counter.vue';
 
   export default {
     props: ['title'],
+    components: {
+      counter,
+    },
     computed: {
       ...map.getters({
-        count: counterStore.api.get.count,
+        count: 'counter/count',
       }),
     },
     methods: {
       ...map.actions({
-        increase: counterStore.api.act.increase,
+        increase: 'counter/increase',
       }),
-    },
-    components: {
-      counter,
     },
   };
 </script>
 
 <template>
-  <div class="combo-counter">
+  <div class="sub-counter">
     <counter :name="title" :count="count" @increase="increase"></counter>
   </div>
 </template>
 
 <style scoped>
-  .combo-counter {
+  .sub-counter {
     width: 100%;
   }
 </style>

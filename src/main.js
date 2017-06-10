@@ -3,12 +3,12 @@ import Vuex from 'vuex';
 import VuexPlus from 'vuex+';
 
 Vue.use(Vuex);
-Vue.use(VuexPlus.vuePlugin);
+Vue.use(VuexPlus.getVuePlugin(Vue));
 
 // Create the Vuex store
 const store = new Vuex.Store({
+  plugins: [VuexPlus.getVuexPlugin(Vuex)],
   strict: process.env.NODE_ENV !== 'production',
-  plugins: [VuexPlus.vuexPlugin],
 });
 
 /* eslint-disable */
