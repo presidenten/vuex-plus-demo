@@ -1,8 +1,8 @@
 import { store, root, newInstance } from 'vuex+';
 import counter from '@/common/counter-substore.js';
 
-const counter$single = newInstance(counter, 'single');
-const counter$multi = newInstance(counter, 'multi');
+const counter$foo = newInstance(counter, 'foo');
+const counter$bar = newInstance(counter, 'bar');
 
 const initialState = {
   count: 0,
@@ -24,8 +24,8 @@ const actions = {
 
     // Example of dispatching in sub modules
     console.log('--- Example of dispatching action in child ---');
-    context.dispatch('counter$single/increase', 10);
-    context.dispatch('counter$multi/increase', 1000);
+    context.dispatch('counter$foo/increase', 10);
+    context.dispatch('counter$bar/increase', 1000);
 
     // Example working with root object
     // Set `state` property to automatically figure out the module and parent instances
@@ -49,8 +49,8 @@ const actions = {
 
     // Example of reading getters with normal Vuex methods
     console.log('--- [Vuex] Example reading getter ---', context.getters.parentCount);
-    console.log('--- [Vuex] Example reading state from child ---', context.state.counter$single.count);
-    console.log('--- [Vuex] Example reading getter from child ---', context.getters['counter$single/count']);
+    console.log('--- [Vuex] Example reading state from child ---', context.state.counter$foo.count);
+    console.log('--- [Vuex] Example reading getter from child ---', context.getters['counter$foo/count']);
 
     // Example reading from root level module instance
     console.log('--- [Vuex+] Example root getter from in same instance ---', root.get({ path: '$root/count', state: context.state }));
@@ -80,7 +80,7 @@ export default store({
   actions,
   mutations,
   modules: {
-    counter$single,
-    counter$multi,
+    counter$foo,
+    counter$bar,
   },
 });

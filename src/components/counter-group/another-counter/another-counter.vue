@@ -50,8 +50,8 @@
         <div class="arrow c">⤸</div>
       </div>
     </transition>
-    <subCounter instance="single" title="SubCounter 1"></subCounter>
-    <subCounter instance="multi" title="SubCounter 2"></subCounter>
+    <subCounter instance="foo" title="SubCounter 1"></subCounter>
+    <subCounter instance="bar" title="SubCounter 2"></subCounter>
   </div>
 </template>
 
