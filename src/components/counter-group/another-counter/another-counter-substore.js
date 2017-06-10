@@ -25,7 +25,7 @@ const actions = {
     // Example of dispatching in sub modules
     console.log('--- Example of dispatching action in child ---');
     context.dispatch('counter$foo/increase', 10);
-    context.dispatch('counter$bar/increase', 1000);
+    context.dispatch('counter$bar/increase', 100);
 
     // Example working with root object
     // Set `state` property to automatically figure out the module and parent instances
