@@ -96,7 +96,7 @@ export default store({
   mutations,
   modules: {
     // submodules, goes here
-  }
+  },
 });
 ```
 
@@ -169,20 +169,21 @@ Here is an example from `./src/components/counter-group/another-counter/another-
 Submodule instances can only be created when used in a parent module. Submodules are created by using the Vuex+ `newInstance` function. The resulting object is then inserted into the `modules` property like usual.
 An example can be found in `./src/components/counter-group/another-counter/another-counter-substore.js`:
 
+
 ```javascript
 import { store, newInstance } from 'vuex+';
 import counter from '@/common/counter-substore.js';
 
-const counter$single = newInstance(counter, 'single');
-const counter$multi = newInstance(counter, 'multi');
+const counter$foo = newInstance(counter, 'foo');
+const counter$bar = newInstance(counter, 'bar');
 
 export default store({
   ...
   modules: {
-    counter$single,
-    counter$multi,
+    counter$foo,
+    counter$bar,
   },
-})
+});
 ```
 
 In the component, instance names are set on the stores bound component:
