@@ -1,5 +1,4 @@
 {
-  "bail": true,
   "testMatch": [
     "**/?(*.)(spec).js?(x)"
   ],
