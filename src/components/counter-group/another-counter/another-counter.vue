@@ -43,8 +43,8 @@
       From root: {{counterGroupCount}}
     </div>
     <counter name="A. Counter" :count="count" @increase="click"></counter>
-    <transition name="fade" class="arrow-container">
-      <div v-if="arrowsVisible" >
+    <transition name="fade">
+      <div v-if="arrowsVisible" class="arrow-container">
         <div class="arrow a">⤸</div>
         <div class="arrow b">⤸</div>
         <div class="arrow c">⤸</div>
@@ -70,6 +70,8 @@
 
   .arrow-container {
     position: absolute;
+    top: 0;
+    right: 0;
   }
 
   .arrow {
@@ -99,9 +101,8 @@
     transition: opacity 0.3s ease;
   }
 
-  /* Om transition så används dessa klasser */
-  .fade-enter,        /* Initialvärde innan något kommer in i domen */
-  .fade-leave-to {    /* Slutvärde när något lämnat domen */
+  .fade-enter,
+  .fade-leave-to {
     opacity: 0;
   }
 </style>
