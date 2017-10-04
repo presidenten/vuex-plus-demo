@@ -15,5 +15,5 @@ const store = new Vuex.Store({
 new Vue({
   el: '#app',
   store,
-  render: h => h(require('./app.vue')),
+  render: h => h(require('./app.vue').default),
 });
