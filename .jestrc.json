@@ -15,7 +15,8 @@
   },
   "moduleNameMapper": {
     "^vue$": "vue/dist/vue.common.js",
-    "@": "<rootDir>/src",
+    "@/": "<rootDir>/src/",
+    "^common(.*)$": "<rootDir>/src/common$1",
     "^vuex\\+$": "vuex-plus"
   }
 }
