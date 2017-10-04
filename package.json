@@ -31,7 +31,7 @@
     "jest-webpack-alias": "^3.3.3",
     "vue": "^2.4.4",
     "vuex": "^2.4.1",
-    "vuex-plus": "^2.0.3"
+    "vuex-plus": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",
