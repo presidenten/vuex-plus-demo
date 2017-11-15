@@ -20,6 +20,9 @@
         // Example getter from root
         return root.get({ path: 'counterGroup/count' });
       },
+      rootGetExample() {
+        return root.get({ path: '$root/count', vnode: this });
+      },
     },
     methods: {
       ...map.actions({
@@ -39,8 +42,11 @@
 <template>
   <div class="another-counter">
     <div class="parent-group">
-      From parent {{ parent }}
-      From root: {{counterGroupCount}}
+      <div>From parent {{ parent }}</div>
+      <div>From parent via $root: {{rootGetExample}}</div>
+
+      <div>From instance $: {{counterGroupCount}}</div>
+
     </div>
     <counter name="A. Counter" :count="count" @increase="click"></counter>
     <transition name="fade">

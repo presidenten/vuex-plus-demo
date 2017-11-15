@@ -56,13 +56,7 @@ const actions = {
     console.log('--- [Vuex+] Example root getter from in same instance ---', root.get({ path: '$root/count', state: context.state }));
 
     // Example of reading getters from root level states with absolute paths
-    // $parent and $root is not available in absolute paths
-    if (root.api.counterGroup) {
-      console.log('--- [Vuex+] Example getter with absolute path, instance name "" ---', root.get({ path: 'counterGroup/count' }));
-    }
-    if (root.api.counterGroup$foo) {
-      console.log('--- [Vuex+] Example getter with absolute path, instance name "foo" ---', root.get({ path: 'counterGroup$foo/count' }));
-    }
+    console.log('--- [Vuex+] Example getter with absolute path', root.get({ path: 'normalVuexCounter/count' }));
   },
 };
 
